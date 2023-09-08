@@ -96,7 +96,9 @@ export default function Home() {
             }}
         >
             <Player controller={controller} setPlayerOffset={setPlayerOffset} frame={frame} />
-            <Enemy globalOffset={globalPos} playerOffset={playerOffset} frame={frame} />
+            {[...Array(100)].map((e, i) => (
+                <Enemy key={i} globalOffset={globalPos} playerOffset={playerOffset} frame={frame} />
+            ))}
             <pre className='absolute top-4 left-4 flex flex-col gap-5 font-extrabold text-sm text-red-200 bg-red-500/50 p-4'>
                 <p>
                     {JSON.stringify(globalPos, null, 4)}
