@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Player from '@/components/Player';
+import Enemy from '@/components/Enemy';
 
 export default function Home() {
     /* ------------------------------- GLOBAL VARS ------------------------------ */
@@ -35,7 +36,7 @@ export default function Home() {
 
         const frameController = setInterval(() => {
             nextFrame()
-        }, 100)
+        }, 10)
 
         return () => {
             window.removeEventListener("keydown", e => {
@@ -66,10 +67,10 @@ export default function Home() {
         let xOff = 0
         let yOff = 0
 
-        controller.w ? yOff -= 10 : null
-        controller.a ? xOff -= 10 : null
-        controller.s ? yOff += 10 : null
-        controller.d ? xOff += 10 : null
+        controller.w ? yOff += 5 : null
+        controller.a ? xOff += 5 : null
+        controller.s ? yOff -= 5 : null
+        controller.d ? xOff -= 5 : null
 
         setGlobalPos(prev => ({ x: prev.x + xOff, y: prev.y + yOff }))
     }, [frame])
@@ -79,9 +80,18 @@ export default function Home() {
     }
 
     return (
-        <main>
+        <main
+            className='w-screen h-screen overflow-hidden'
+            style={{
+                backgroundColor: "#e5e5f7",
+                backgroundImage:  "linear-gradient(#444cf7 1px, transparent 1px), linear-gradient(to right, #444cf7 1px, #e5e5f7 1px)",
+                backgroundSize: "50px 50px",
+                backgroundPosition: `${globalPos.x}px ${globalPos.y}px`
+            }}
+        >
             <Player controller={controller} />
-            <pre className='flex flex-col gap-5'>
+            <Enemy globalOffset={globalPos} />
+            <pre className='flex flex-col gap-5 font-extrabold text-xl text-red-900 bg-red-500/50 p-4'>
                 <p>
                     {JSON.stringify(globalPos, null, 4)}
                 </p>

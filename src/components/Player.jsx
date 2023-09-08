@@ -24,7 +24,7 @@ export default function Player(props) {
     return (
         <motion.div 
             ref={playerRef}
-            className='bg-emerald-400 w-12 h-12 rounded-full absolute -translate-x-1/2 -translate-y-1/2'
+            className='bg-emerald-400 w-12 h-12 rounded-2xl border-4 border-emerald-600 absolute -translate-x-1/2 -translate-y-1/2'
 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, top: `calc(50% + ${offset.y}px)`, left: `calc(50% + ${offset.x}px)` }}
