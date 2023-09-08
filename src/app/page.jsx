@@ -5,13 +5,14 @@ import React, { useState, useEffect } from 'react';
 import Player from '@/components/Player';
 import Enemy from '@/components/Enemy';
 
-import Background from "@/assets/img/background.png"
+import Background from "@/assets/img/background3.png"
 
 export default function Home() {
     /* ------------------------------- GLOBAL VARS ------------------------------ */
     const [globalPos, setGlobalPos] = useState({ x: 0, y: 0 })
     const [controller, setController] = useState({ w: false, a: false, s: false, d: false })
     const [frame, setFrame] = useState(0)
+    const [playerOffset, setPlayerOffset] = useState({ x: 0, y: 0 })
 
     useEffect(() => {
         window.addEventListener("keydown", e => {
@@ -62,6 +63,8 @@ export default function Home() {
                     default: break
                 }
             })
+
+            clearInterval(frameController)
         }
     }, [])
 
@@ -92,9 +95,9 @@ export default function Home() {
                 imageRendering: "pixelated"
             }}
         >
-            <Player controller={controller} />
-            <Enemy globalOffset={globalPos} />
-            <pre className='flex flex-col gap-5 font-extrabold text-sm text-red-900 bg-red-500/50 p-4'>
+            <Player controller={controller} setPlayerOffset={setPlayerOffset} frame={frame} />
+            <Enemy globalOffset={globalPos} playerOffset={playerOffset} frame={frame} />
+            <pre className='absolute top-4 left-4 flex flex-col gap-5 font-extrabold text-sm text-red-200 bg-red-500/50 p-4'>
                 <p>
                     {JSON.stringify(globalPos, null, 4)}
                 </p>
@@ -103,6 +106,9 @@ export default function Home() {
                 </p>
                 <p>
                     {JSON.stringify(frame, null, 4)}
+                </p>
+                <p>
+                    {JSON.stringify(playerOffset, null, 4)}
                 </p>
             </pre>
         </main>

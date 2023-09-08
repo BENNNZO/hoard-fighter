@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 export default function Player(props) {
     const [offset, setOffset] = useState({ x: 0, y: 0 })
 
+    let playerRef = useRef()
+
     useEffect(() => {
         let xOff = 0
         let yOff = 0
@@ -19,7 +21,19 @@ export default function Player(props) {
 
     }, [props.controller])
 
-    let playerRef = useRef()
+    useEffect(() => {
+        window.addEventListener("resize", () => {
+            props.setPlayerOffset({ x: playerRef.current.offsetLeft, y: playerRef.current.offsetTop })
+        })
+
+        props.setPlayerOffset({ x: playerRef.current.offsetLeft, y: playerRef.current.offsetTop })
+
+        return () => {
+            window.removeEventListener("resize", () => {
+                props.setPlayerOffset({ x: playerRef.current.offsetLeft, y: playerRef.current.offsetTop })
+            })
+        }
+    }, [props.frame])
 
     return (
         <motion.div 
