@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react';
 import Player from '@/components/Player';
 import Enemy from '@/components/Enemy';
 
+import Background from "@/assets/img/background.png"
+
 export default function Home() {
     /* ------------------------------- GLOBAL VARS ------------------------------ */
     const [globalPos, setGlobalPos] = useState({ x: 0, y: 0 })
@@ -36,7 +38,7 @@ export default function Home() {
 
         const frameController = setInterval(() => {
             nextFrame()
-        }, 10)
+        }, 5)
 
         return () => {
             window.removeEventListener("keydown", e => {
@@ -67,10 +69,10 @@ export default function Home() {
         let xOff = 0
         let yOff = 0
 
-        controller.w ? yOff += 5 : null
-        controller.a ? xOff += 5 : null
-        controller.s ? yOff -= 5 : null
-        controller.d ? xOff -= 5 : null
+        controller.w ? yOff += 3 : null
+        controller.a ? xOff += 3 : null
+        controller.s ? yOff -= 3 : null
+        controller.d ? xOff -= 3 : null
 
         setGlobalPos(prev => ({ x: prev.x + xOff, y: prev.y + yOff }))
     }, [frame])
@@ -84,14 +86,15 @@ export default function Home() {
             className='w-screen h-screen overflow-hidden'
             style={{
                 backgroundColor: "#e5e5f7",
-                backgroundImage:  "linear-gradient(#444cf7 1px, transparent 1px), linear-gradient(to right, #444cf7 1px, #e5e5f7 1px)",
-                backgroundSize: "50px 50px",
-                backgroundPosition: `${globalPos.x}px ${globalPos.y}px`
+                backgroundImage:  `url(${Background.src})`,
+                backgroundSize: "250rem 250rem",
+                backgroundPosition: `${globalPos.x}px ${globalPos.y}px`,
+                imageRendering: "pixelated"
             }}
         >
             <Player controller={controller} />
             <Enemy globalOffset={globalPos} />
-            <pre className='flex flex-col gap-5 font-extrabold text-xl text-red-900 bg-red-500/50 p-4'>
+            <pre className='flex flex-col gap-5 font-extrabold text-sm text-red-900 bg-red-500/50 p-4'>
                 <p>
                     {JSON.stringify(globalPos, null, 4)}
                 </p>
